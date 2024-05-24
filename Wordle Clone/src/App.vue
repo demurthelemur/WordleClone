@@ -1,6 +1,5 @@
 <template>
   <h1>Wordle Clone</h1>
-  <h1>{{ test }}</h1>
   <div class="words">
     <wordItem :arrays="guess1" :Word="guess1.text.toUpperCase()" />
     <wordItem :arrays="guess2" :Word="guess2.text.toUpperCase()" />
@@ -65,11 +64,6 @@ export default {
         correctList: [0, 0, 0, 0, 0]
       },
       guessNo: 1
-    }
-  },
-  computed: {
-    test() {
-      return this.$store.state.test
     }
   },
   created() {

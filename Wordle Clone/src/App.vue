@@ -30,39 +30,39 @@ export default {
       currentWord: '',
       guess1: {
         text: '',
-        placementList: [],
-        wrongList: [],
+        placementList: [0, 0, 0, 0, 0],
+        wrongList: [0, 0, 0, 0, 0],
         correctList: [0, 0, 0, 0, 0]
       },
       guess2: {
         text: '',
-        placementList: [],
-        wrongList: [],
-        correctList: []
+        placementList: [0, 0, 0, 0, 0],
+        wrongList: [0, 0, 0, 0, 0],
+        correctList: [0, 0, 0, 0, 0]
       },
       guess3: {
         text: '',
-        placementList: [],
-        wrongList: [],
-        correctList: []
+        placementList: [0, 0, 0, 0, 0],
+        wrongList: [0, 0, 0, 0, 0],
+        correctList: [0, 0, 0, 0, 0]
       },
       guess4: {
         text: '',
-        placementList: [],
-        wrongList: [],
-        correctList: []
+        placementList: [0, 0, 0, 0, 0],
+        wrongList: [0, 0, 0, 0, 0],
+        correctList: [0, 0, 0, 0, 0]
       },
       guess5: {
         text: '',
-        placementList: [],
-        wrongList: [],
-        correctList: []
+        placementList: [0, 0, 0, 0, 0],
+        wrongList: [0, 0, 0, 0, 0],
+        correctList: [0, 0, 0, 0, 0]
       },
       guess6: {
         text: '',
-        placementList: [],
-        wrongList: [],
-        correctList: []
+        placementList: [0, 0, 0, 0, 0],
+        wrongList: [0, 0, 0, 0, 0],
+        correctList: [0, 0, 0, 0, 0]
       },
       guessNo: 1
     }
@@ -74,7 +74,6 @@ export default {
   },
   created() {
     this.selectedWord = wordsList[Math.floor(Math.random() * wordsList.length)].toUpperCase()
-    console.log(this.selectedWord)
   },
   methods: {
     letterReceived(letter) {
@@ -85,8 +84,6 @@ export default {
         } else if (this.currentWord.length !== 5) {
           alert('Word too short')
           return
-        } else if (this.currentWord === this.selectedWord) {
-          this.gameEndWin()
         } else {
           this.checkResult()
         }
@@ -97,11 +94,54 @@ export default {
       }
     },
     checkResult() {
+      let tempCorrectList = [0, 0, 0, 0, 0]
+      let tempPlacementList = [0, 0, 0, 0, 0]
+      let tempWrongList = [0, 0, 0, 0, 0]
+
+      for (let i = 0; i < 5; i++) {
+        if (this.currentWord[i] === this.selectedWord[i]) {
+          tempCorrectList[i] = 1
+        } else if (this.selectedWord.includes(this.currentWord[i])) {
+          tempPlacementList[i] = 1
+        } else {
+          tempWrongList[i] = 1
+        }
+      }
+      if (this.guessNo === 1) {
+        this.guess1.correctList = tempCorrectList
+        this.guess1.placementList = tempPlacementList
+        this.guess1.wrongList = tempWrongList
+      } else if (this.guessNo === 2) {
+        this.guess2.correctList = tempCorrectList
+        this.guess2.placementList = tempPlacementList
+        this.guess2.wrongList = tempWrongList
+      } else if (this.guessNo === 3) {
+        this.guess3.correctList = tempCorrectList
+        this.guess3.placementList = tempPlacementList
+        this.guess3.wrongList = tempWrongList
+      } else if (this.guessNo === 4) {
+        this.guess4.correctList = tempCorrectList
+        this.guess4.placementList = tempPlacementList
+        this.guess4.wrongList = tempWrongList
+      } else if (this.guessNo === 5) {
+        this.guess5.correctList = tempCorrectList
+        this.guess5.placementList = tempPlacementList
+        this.guess5.wrongList = tempWrongList
+      } else if (this.guessNo === 6) {
+        this.guess6.correctList = tempCorrectList
+        this.guess6.placementList = tempPlacementList
+        this.guess6.wrongList = tempWrongList
+      }
+
+      if (this.currentWord === this.selectedWord) {
+        this.gameEndWin()
+      }
       this.currentWord = ''
       this.guessNo++
     },
     gameEndLost() {
       alert('You lose!')
+      this.resetColors()
       this.selectedWord = wordsList[Math.floor(Math.random() * wordsList.length)].toUpperCase()
       this.guess1.text = ''
       this.guess2.text = ''
@@ -112,32 +152,32 @@ export default {
       this.guessNo = 1
     },
     gameEndWin() {
-      // if (this.guessNo === 1) {
-      //   this.guess1.correctList = [1, 1, 1, 1, 1]
-      // } else if (this.guessNo === 2) {
-      //   this.guess2.correctList = [1, 1, 1, 1, 1]
-      // } else if (this.guessNo === 3) {
-      //   this.guess3.correctList = [1, 1, 1, 1, 1]
-      // } else if (this.guessNo === 4) {
-      //   this.guess4.correctList = [1, 1, 1, 1, 1]
-      // } else if (this.guessNo === 5) {
-      //   this.guess5.correctList = [1, 1, 1, 1, 1]
-      // } else if (this.guessNo === 6) {
-      //   this.guess6.correctList = [1, 1, 1, 1, 1]
-      // }
-      this.selectedWord = wordsList[Math.floor(Math.random() * wordsList.length)].toUpperCase()
-      this.guess1.text = ''
-      this.guess2.text = ''
-      this.guess3.text = ''
-      this.guess4.text = ''
-      this.guess5.text = ''
-      this.guess6.text = ''
-      this.guessNo = 1
+      alert('You win!')
+      window.location.reload()
+    },
+    resetColors() {
+      this.guess1.correctList = [0, 0, 0, 0, 0]
+      this.guess1.placementList = [0, 0, 0, 0, 0]
+      this.guess1.wrongList = [0, 0, 0, 0, 0]
+      this.guess2.correctList = [0, 0, 0, 0, 0]
+      this.guess2.placementList = [0, 0, 0, 0, 0]
+      this.guess2.wrongList = [0, 0, 0, 0, 0]
+      this.guess3.correctList = [0, 0, 0, 0, 0]
+      this.guess3.placementList = [0, 0, 0, 0, 0]
+      this.guess3.wrongList = [0, 0, 0, 0, 0]
+      this.guess4.correctList = [0, 0, 0, 0, 0]
+      this.guess4.placementList = [0, 0, 0, 0, 0]
+      this.guess4.wrongList = [0, 0, 0, 0, 0]
+      this.guess5.correctList = [0, 0, 0, 0, 0]
+      this.guess5.placementList = [0, 0, 0, 0, 0]
+      this.guess5.wrongList = [0, 0, 0, 0, 0]
+      this.guess6.correctList = [0, 0, 0, 0, 0]
+      this.guess6.placementList = [0, 0, 0, 0, 0]
+      this.guess6.wrongList = [0, 0, 0, 0, 0]
     }
   },
   watch: {
     currentWord() {
-      console.log(this.currentWord)
       if (this.currentWord.length > 5) {
         this.currentWord = this.currentWord.slice(0, 5)
       }

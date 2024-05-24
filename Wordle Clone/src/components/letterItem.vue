@@ -11,11 +11,6 @@ export default {
       type: String,
       required: false
     }
-  },
-  watch: {
-    Letter() {
-      console.log(this.Letter)
-    }
   }
 }
 </script>

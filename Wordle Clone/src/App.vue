@@ -68,6 +68,7 @@ export default {
   },
   created() {
     this.selectedWord = wordsList[Math.floor(Math.random() * wordsList.length)].toUpperCase()
+    console.log(this.selectedWord)
   },
   methods: {
     letterReceived(letter) {
@@ -91,16 +92,27 @@ export default {
       let tempCorrectList = [0, 0, 0, 0, 0]
       let tempPlacementList = [0, 0, 0, 0, 0]
       let tempWrongList = [0, 0, 0, 0, 0]
-
+      let correctLetterList = this.selectedWord.split('')
+      console.log(correctLetterList)
       for (let i = 0; i < 5; i++) {
-        if (this.currentWord[i] === this.selectedWord[i]) {
+        if (this.currentWord[i] === correctLetterList[i]) {
           tempCorrectList[i] = 1
-        } else if (this.selectedWord.includes(this.currentWord[i])) {
+          correctLetterList[i] = ''
+        }
+      }
+      for (let i = 0; i < 5; i++) {
+        if (correctLetterList.includes(this.currentWord[i])) {
           tempPlacementList[i] = 1
-        } else {
+          console.log('incorrect placement', i)
+          correctLetterList[correctLetterList.indexOf(this.currentWord[i])] = ''
+        } else if (correctLetterList[i] !== '') {
+          console.log(correctLetterList)
+          tempWrongList[i] = 1
+        } else if (tempCorrectList[i] === 0 && tempPlacementList[i] === 0) {
           tempWrongList[i] = 1
         }
       }
+
       if (this.guessNo === 1) {
         this.guess1.correctList = tempCorrectList
         this.guess1.placementList = tempPlacementList
